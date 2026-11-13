@@ -38,7 +38,11 @@ export function incomingMedia(items) {
     if(!/^[a-z0-9.+-]+\/[a-z0-9.+-]+$/.test(mime)||mime.length>127||mime.startsWith('video/'))return null;
     const type=mime.startsWith('image/')?'image':'file';
     let name='';try{if(item.filename!==undefined){string(item.filename,255);if(!/[\r\n\u0000-\u001f\u007f]|\p{Surrogate}/u.test(item.filename))name=item.filename;}}catch{}
-    const urls=[];try{if(item.url)urls.push(voiceUrl(item.url));}catch{}
+    const urls=[];try{if(item.url)urls.push(voiceUrl(item.url));}catch{
+      let protocol=null,hostname=null;
+      try{const u=new URL(item.url.startsWith('//')?'https:'+item.url:item.url);protocol=u.protocol;hostname=u.hostname;}catch{}
+      console.warn(JSON.stringify({event:'qq_media_url_rejected',protocol,hostname}));
+    }
     result.push({type,name,mime,urls});
   }
   return result;
