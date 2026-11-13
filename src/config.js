@@ -37,7 +37,7 @@ export function readConfig(env = process.env) {
     callbackHosts: (env.MCP_CALLBACK_ALLOWED_HOSTS || '').split(',').map(x => x.trim().toLowerCase()).filter(Boolean),
     callbackWrongSettingPresent: Boolean(env.CALLBACK_HOSTS),
     allowedOrigins: (env.MCP_ALLOWED_ORIGINS || '').split(',').map(x => x.trim()).filter(Boolean),
-    signatureSkewSeconds: 300, replyTtlMs: number(env, 'REPLY_TTL_SECONDS', 240, 10, 300) * 1000,
+    signatureSkewSeconds: 300, replyTtlMs: number(env, 'REPLY_TTL_SECONDS', 240, 10, 3600) * 1000,
     subscriptionTtlMs: number(env, 'SUBSCRIPTION_TTL_SECONDS', 86400, 60, 604800) * 1000,
     queueLimit: number(env, 'QUEUE_LIMIT', 100, 1, 10000), inboundPerMinute: number(env, 'INBOUND_PER_MINUTE', 10, 1, 20),
     repliesPerMinute: number(env, 'REPLIES_PER_MINUTE', 10, 1, 20), maxAttempts: number(env, 'MAX_DELIVERY_ATTEMPTS', 5, 1, 10),
